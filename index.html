@@ -3083,14 +3083,16 @@ function applyData(d){
   if(d.nextId)nextId=d.nextId;
 }
 function loadPersisted(){
-  // 1. Try localStorage first (local edits take priority)
+  // If a snapshot is baked in (published file), it always wins —
+  // this ensures the live site shows the latest published data
+  // and ignores any stale localStorage from previous visits.
+  try{
+    if(__DATA_SNAPSHOT__){applyData(__DATA_SNAPSHOT__);return true;}
+  }catch(e){}
+  // No snapshot → local file, use localStorage for persisted edits
   try{
     const s=localStorage.getItem(STORAGE_KEY);
     if(s){const d=JSON.parse(s);applyData(d);return true;}
-  }catch(e){}
-  // 2. Fall back to embedded snapshot (baked in via Download Snapshot)
-  try{
-    if(__DATA_SNAPSHOT__){applyData(__DATA_SNAPSHOT__);return true;}
   }catch(e){}
   return false;
 }
