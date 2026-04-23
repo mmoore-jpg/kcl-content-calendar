@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KCL 2026 Production Calendar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #1E1B15;
@@ -367,13 +366,17 @@
   <div class="header-left">
     <div class="logo" style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:-0.02em">KCL <span style="color:var(--accent)">2026</span></div>
     <button class="dash-btn" id="dash-btn" onclick="toggleDash()">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="6" height="6" rx="1"></rect><rect x="9" y="1" width="6" height="6" rx="1"></rect><rect x="1" y="9" width="6" height="6" rx="1"></rect><rect x="9" y="9" width="6" height="6" rx="1"></rect></svg>
       Dashboard
     </button>
   </div>
   <div class="header-right">
+    <button class="btn-secondary" onclick="downloadSnapshot()" title="Download index.html with all your data baked in — replace the file and run deploy.command to update the live site">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v8M5 7l3 3 3-3M2 13h12"></path></svg>
+      Publish
+    </button>
     <button class="btn-secondary" onclick="exportCSV()">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 10v3h12v-3M8 2v8M5 7l3 3 3-3"/></svg>
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 10v3h12v-3M8 2v8M5 7l3 3 3-3"></path></svg>
       CSV
     </button>
   </div>
@@ -386,59 +389,800 @@
 <!-- Toolbar -->
 <div class="toolbar">
   <div class="search-wrap">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3"/></svg>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"></circle><path d="M10.5 10.5l3 3"></path></svg>
     <input type="text" id="search" placeholder="Search projects, owners…" oninput="render()">
   </div>
   <select class="filter" id="f-cat" onchange="render()">
     <option value="">All categories</option>
-  </select>
+  <option value="Retail">Retail</option><option value="Digital">Digital</option><option value="Brand">Brand</option><option value="Trade Show">Trade Show</option><option value="Event">Event</option><option value="Launch">Launch</option></select>
   <select class="filter" id="f-status" onchange="render()">
     <option value="">All statuses</option>
-  </select>
+  <option value="Planning">Planning</option><option value="Shoot">Shoot</option><option value="Live">Live</option><option value="Pending">Pending</option><option value="Blocked">Blocked</option></select>
   <select class="filter" id="f-priority" onchange="render()">
     <option value="">All priorities</option>
-  </select>
+  <option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
   <select class="filter" id="f-owner" onchange="render()">
     <option value="">All owners</option>
-  </select>
+  <option value="Amanda">Amanda</option><option value="Carlo">Carlo</option><option value="Caryn">Caryn</option><option value="Madison">Madison</option><option value="Paulina">Paulina</option><option value="Sabrina">Sabrina</option></select>
   <button class="btn-secondary" onclick="openSettings('cats')" title="Manage filters">
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2.5M8 12.5v2.5M1 8h2.5M12.5 8H15M3.3 3.3l1.8 1.8M10.9 10.9l1.8 1.8M3.3 12.7l1.8-1.8M10.9 5.1l1.8-1.8"/></svg>
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="2.5"></circle><path d="M8 1v2.5M8 12.5v2.5M1 8h2.5M12.5 8H15M3.3 3.3l1.8 1.8M10.9 10.9l1.8 1.8M3.3 12.7l1.8-1.8M10.9 5.1l1.8-1.8"></path></svg>
     Manage
   </button>
   <div class="divider"></div>
   <div class="view-group">
     <button class="view-btn active" id="vb-timeline" onclick="setView('timeline')">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M2 8h8M2 12h10"></path></svg>
       Timeline
     </button>
     <button class="view-btn" id="vb-table" onclick="setView('table')">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M1 5h14M1 9h14M5 5v9"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="14" height="14" rx="2"></rect><path d="M1 5h14M1 9h14M5 5v9"></path></svg>
       Table
     </button>
     <button class="view-btn" id="vb-cal" onclick="setView('cal')">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v2M11 1v2"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"></rect><path d="M1 6h14M5 1v2M11 1v2"></path></svg>
       Calendar
     </button>
   </div>
   <button class="btn-export" onclick="exportData()" title="Download your data as a JSON backup file">
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v9M5 8l3 3 3-3M2 13h12"/></svg>
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v9M5 8l3 3 3-3M2 13h12"></path></svg>
     Export
   </button>
   <button class="btn-export" onclick="importData()" title="Restore data from a previously exported JSON file">
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 11V2M5 5l3-3 3 3M2 13h12"/></svg>
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 11V2M5 5l3-3 3 3M2 13h12"></path></svg>
     Import
   </button>
   <div class="divider"></div>
   <button class="btn-primary" onclick="openAdd()">
-    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg>
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg>
     Add project
   </button>
 </div>
-<div id="save-toast"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8l4 4 8-8"/></svg> Saved</div>
+<div id="save-toast" style="opacity: 0;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8l4 4 8-8"></path></svg> Saved</div>
 
 
 <!-- Main content -->
-<div class="main" id="main-view"></div>
+<div class="main" id="main-view"><div class="table-wrap"><div class="tbl-scroll"><table>
+    <thead><tr>
+      <th class="sortable" onclick="setSort('cat')">Category<span class="sort-icon"></span></th><th class="sortable sort-asc" onclick="setSort('name')">Project<span class="sort-icon"></span></th><th class="sortable" onclick="setSort('status')">Status<span class="sort-icon"></span></th><th class="sortable" onclick="setSort('priority')">Priority<span class="sort-icon"></span></th>
+      <th>Owner</th><th>Milestones</th><th>Status</th><th></th>
+    </tr><tr class="filter-row">
+    <td><select class="tf-select" onchange="setTF('cat',this.value)"><option value="">All</option><option value="Retail">Retail</option><option value="Digital">Digital</option><option value="Brand">Brand</option><option value="Trade Show">Trade Show</option><option value="Event">Event</option><option value="Launch">Launch</option></select></td>
+    <td></td>
+    <td><select class="tf-select" onchange="setTF('status',this.value)"><option value="">All</option><option value="Planning">Planning</option><option value="Shoot">Shoot</option><option value="Live">Live</option><option value="Pending">Pending</option><option value="Blocked">Blocked</option></select></td>
+    <td><select class="tf-select" onchange="setTF('priority',this.value)"><option value="">All</option><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select></td>
+    <td><select class="tf-select" onchange="setTF('owner',this.value)"><option value="">All</option><option value="Amanda">Amanda</option><option value="Carlo">Carlo</option><option value="Caryn">Caryn</option><option value="Madison">Madison</option><option value="Paulina">Paulina</option><option value="Sabrina">Sabrina</option></select></td>
+    <td></td><td></td><td style="text-align:right"></td>
+  </tr></thead>
+    <tbody>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,34,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,34,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Ag In Motion</td>
+      <td class="editable" onclick="inlineEdit(event,34,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,34,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,34,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(34)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Jul 19 · Set up</span><span class="ms-chip ms-other">Jul 21 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,34,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Waiting on Deliverables</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(34)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(34)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,48,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,48,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">AG Parts Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,48,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,48,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,48,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(48)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,48,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(48)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(48)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,26,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,26,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Ag Walkaround</td>
+      <td class="editable" onclick="inlineEdit(event,26,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,26,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,26,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(26)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,26,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Preproduction planning</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(26)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(26)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,37,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,37,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Agri-Trade Red Deer</td>
+      <td class="editable" onclick="inlineEdit(event,37,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,37,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,37,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(37)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Nov 11 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,37,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(37)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(37)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,38,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,38,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Agribition Regina</td>
+      <td class="editable" onclick="inlineEdit(event,38,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,38,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,38,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(38)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Nov 23 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,38,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(38)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(38)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,39,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,39,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Atlantic Farm Mechanization Show</td>
+      <td class="editable" onclick="inlineEdit(event,39,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,39,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,39,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(39)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Nov 19 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,39,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(39)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(39)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,1,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,1,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Big Orange Event</td>
+      <td class="editable" onclick="inlineEdit(event,1,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,1,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,1,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Carlo">C</span> <span style="font-size:12px;color:var(--text-2)">Carlo</span></td>
+      <td class="editable" onclick="openEdit(1)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Apr 1 · Goes Live</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,1,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Live as of April 1</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(1)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(1)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,46,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,46,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Blades – Parts Incentive</td>
+      <td class="editable" onclick="inlineEdit(event,46,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,46,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,46,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(46)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Apr 1 · Live</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,46,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(46)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(46)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,200,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,200,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">BV6000 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,200,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,200,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,200,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(200)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-edit">Strategy Presentation · Feedback</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,200,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Strategy in production</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(200)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(200)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,27,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,27,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">BX Summer Contest</td>
+      <td class="editable" onclick="inlineEdit(event,27,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,27,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,27,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Paulina">P</span> <span style="font-size:12px;color:var(--text-2)">Paulina</span></td>
+      <td class="editable" onclick="openEdit(27)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jun 1 · Launch</span><span class="ms-chip ms-other">Aug 15 · Close</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,27,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Contest currently live</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(27)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(27)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,40,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,40,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">BX90 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,40,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,40,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--red-light);color:var(--red-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red-text);flex-shrink:0"></span> Critical</span></td>
+      <td class="editable" onclick="inlineEdit(event,40,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(40)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-shoot">June 15 · Shoot</span><span class="ms-chip ms-release">September 28 · Release</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,40,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Web features approved</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(40)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(40)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,22,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,22,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">BX90 Studio Shoot</td>
+      <td class="editable" onclick="inlineEdit(event,22,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--red-light);color:var(--red-text)">Blocked</span></td>
+      <td class="editable" onclick="inlineEdit(event,22,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,22,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Caryn">C</span> <span style="font-size:12px;color:var(--text-2)">Caryn</span></td>
+      <td class="editable" onclick="openEdit(22)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Jul 13 · Pre-production</span><span class="ms-chip ms-shoot">Aug 25 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,22,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">On Hold</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(22)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(22)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,55,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,55,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Canada West Equipment Dealers</td>
+      <td class="editable" onclick="inlineEdit(event,55,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,55,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,55,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(55)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Feb 11 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,55,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(55)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(55)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,59,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,59,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Customer Appreciation Day</td>
+      <td class="editable" onclick="inlineEdit(event,59,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,59,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,59,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(59)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jun 12 · Event</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,59,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(59)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(59)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,4,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,4,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Fall Incentive Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,4,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,4,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,4,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(4)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Sep 1 · Launch</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,4,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(4)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(4)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,20,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,20,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Golf Shoot – RTV / MX</td>
+      <td class="editable" onclick="inlineEdit(event,20,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,20,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,20,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Amanda">A</span> <span style="font-size:12px;color:var(--text-2)">Amanda</span></td>
+      <td class="editable" onclick="openEdit(20)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 9 · Site Visit</span><span class="ms-chip ms-shoot">May 26 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,20,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(20)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(20)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,60,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,60,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Harvest Customer Event</td>
+      <td class="editable" onclick="inlineEdit(event,60,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,60,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,60,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(60)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Sep 18 · Event</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,60,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(60)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(60)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,23,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,23,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Hay Shoot</td>
+      <td class="editable" onclick="inlineEdit(event,23,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,23,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,23,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Amanda">A</span> <span style="font-size:12px;color:var(--text-2)">Amanda</span></td>
+      <td class="editable" onclick="openEdit(23)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,23,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Filming Date TBC</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(23)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(23)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,28,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,28,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">KNA Connect: Dealer Meeting</td>
+      <td class="editable" onclick="inlineEdit(event,28,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,28,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--red-light);color:var(--red-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red-text);flex-shrink:0"></span> Critical</span></td>
+      <td class="editable" onclick="inlineEdit(event,28,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(28)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Sep 24 · Prep</span><span class="ms-chip ms-other">Sep 28 · Event start</span><span class="ms-chip ms-other">Sep 30 · Event end</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,28,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Waiting on Deliverables list</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(28)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(28)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,21,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,21,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">KTC BX90 Shoot</td>
+      <td class="editable" onclick="inlineEdit(event,21,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,21,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,21,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Caryn">C</span> <span style="font-size:12px;color:var(--text-2)">Caryn</span></td>
+      <td class="editable" onclick="openEdit(21)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 13 · Pre-production</span><span class="ms-chip ms-shoot">Jun 15 · Shoot</span><span class="ms-chip ms-shoot">Jun 19 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,21,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Planning starts April 17</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(21)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(21)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,44,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,44,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">KX018-4 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,44,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,44,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,44,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(44)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,44,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">V2 Strategy in progress</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(44)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(44)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,18,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,18,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Loader + L5070 Studio Shoot</td>
+      <td class="editable" onclick="inlineEdit(event,18,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,18,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,18,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Amanda">A</span> <span style="font-size:12px;color:var(--text-2)">Amanda</span></td>
+      <td class="editable" onclick="openEdit(18)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-shoot">Apr 15 · Shoot</span><span class="ms-chip ms-edit">May 29 · Retouching</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,18,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Filming completed - Retouching in progress</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(18)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(18)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,29,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,29,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Memorial Cup Sponsorship</td>
+      <td class="editable" onclick="inlineEdit(event,29,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,29,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,29,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(29)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">May 21 · Event</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,29,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(29)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(29)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,33,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--purple-light);color:var(--purple-text)">Brand</span></td>
+      <td class="editable" onclick="inlineEdit(event,33,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">National Accounts Support</td>
+      <td class="editable" onclick="inlineEdit(event,33,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,33,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,33,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(33)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,33,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(33)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(33)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,30,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--purple-light);color:var(--purple-text)">Brand</span></td>
+      <td class="editable" onclick="inlineEdit(event,30,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">National Parts Manager Meeting</td>
+      <td class="editable" onclick="inlineEdit(event,30,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,30,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,30,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(30)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,30,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(30)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(30)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,24,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,24,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Nordik – Cold Weather Testing Video</td>
+      <td class="editable" onclick="inlineEdit(event,24,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,24,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,24,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Amanda">A</span> <span style="font-size:12px;color:var(--text-2)">Amanda</span></td>
+      <td class="editable" onclick="openEdit(24)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-shoot">May 11 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,24,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(24)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(24)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,56,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,56,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Outdoor Farm Show</td>
+      <td class="editable" onclick="inlineEdit(event,56,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,56,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,56,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(56)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Sep 8 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,56,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(56)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(56)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,52,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,52,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Paid Search – Spring</td>
+      <td class="editable" onclick="inlineEdit(event,52,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,52,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,52,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Paulina">P</span> <span style="font-size:12px;color:var(--text-2)">Paulina</span></td>
+      <td class="editable" onclick="openEdit(52)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Mar 1 · Launch</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,52,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(52)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(52)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,31,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--purple-light);color:var(--purple-text)">Brand</span></td>
+      <td class="editable" onclick="inlineEdit(event,31,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Parts Elite Program</td>
+      <td class="editable" onclick="inlineEdit(event,31,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,31,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,31,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(31)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,31,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(31)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(31)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,32,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--purple-light);color:var(--purple-text)">Brand</span></td>
+      <td class="editable" onclick="inlineEdit(event,32,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Prospects Challenge</td>
+      <td class="editable" onclick="inlineEdit(event,32,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,32,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,32,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(32)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,32,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(32)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(32)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,51,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,51,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Q1 Social Media Push</td>
+      <td class="editable" onclick="inlineEdit(event,51,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Complete</span></td>
+      <td class="editable" onclick="inlineEdit(event,51,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,51,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Paulina">P</span> <span style="font-size:12px;color:var(--text-2)">Paulina</span></td>
+      <td class="editable" onclick="openEdit(51)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jan 5 · Start</span><span class="ms-chip ms-other">Mar 31 · Wrap</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,51,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(51)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(51)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,7,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,7,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Aiden Nicholas Fillator</td>
+      <td class="editable" onclick="inlineEdit(event,7,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,7,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,7,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(7)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-edit">Apr 13 · Editing</span><span class="ms-chip ms-edit">Apr 27 · Finalize</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,7,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(7)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(7)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,8,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,8,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Antony Legare (QC)</td>
+      <td class="editable" onclick="inlineEdit(event,8,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,8,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,8,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(8)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 13 · Pre-production</span><span class="ms-chip ms-shoot">Apr 20 · Shoot</span><span class="ms-chip ms-release">Jun 3 · Release</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,8,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(8)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(8)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,13,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,13,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Germain Fournier &amp; Manon Patry</td>
+      <td class="editable" onclick="inlineEdit(event,13,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,13,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,13,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(13)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,13,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(13)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(13)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,10,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,10,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Jean Francois Lambert (QC)</td>
+      <td class="editable" onclick="inlineEdit(event,10,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,10,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,10,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(10)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 13 · Pre-production</span><span class="ms-chip ms-shoot">May 8 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,10,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(10)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(10)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,9,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,9,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Josh Sawatsky (BC)</td>
+      <td class="editable" onclick="inlineEdit(event,9,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,9,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,9,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(9)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 13 · Pre-production</span><span class="ms-chip ms-shoot">Apr 27 · Shoot</span><span class="ms-chip ms-release">Jul 8 · Release</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,9,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(9)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(9)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,12,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,12,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Mario Jodoin (QC)</td>
+      <td class="editable" onclick="inlineEdit(event,12,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--red-light);color:var(--red-text)">Blocked</span></td>
+      <td class="editable" onclick="inlineEdit(event,12,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,12,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(12)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,12,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(12)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(12)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,6,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,6,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Oli Deneigement (QC)</td>
+      <td class="editable" onclick="inlineEdit(event,6,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,6,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,6,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(6)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-edit">Apr 13 · Editing</span><span class="ms-chip ms-edit">Apr 27 · Finalize</span><span class="ms-chip ms-release">Dec 2 · Release</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,6,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(6)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(6)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,15,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,15,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Rick Porter (NS)</td>
+      <td class="editable" onclick="inlineEdit(event,15,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,15,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,15,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(15)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,15,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(15)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(15)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,14,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,14,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Trevor Atmer (SK)</td>
+      <td class="editable" onclick="inlineEdit(event,14,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,14,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,14,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(14)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,14,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(14)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(14)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,11,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,11,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">R3 – Tyler Lee + Joshua Lee (MB)</td>
+      <td class="editable" onclick="inlineEdit(event,11,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,11,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,11,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(11)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-shoot">May 26 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,11,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(11)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(11)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,25,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,25,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">RTV-X Lift</td>
+      <td class="editable" onclick="inlineEdit(event,25,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,25,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,25,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Amanda">A</span> <span style="font-size:12px;color:var(--text-2)">Amanda</span></td>
+      <td class="editable" onclick="openEdit(25)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,25,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Production planning - Confirming dates with talent</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(25)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(25)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,35,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,35,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Salon de l'agriculture Expo-champs</td>
+      <td class="editable" onclick="inlineEdit(event,35,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,35,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,35,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(35)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Aug 26 · Show</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,35,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(35)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(35)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,53,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--blue-light);color:var(--blue-text)">Digital</span></td>
+      <td class="editable" onclick="inlineEdit(event,53,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">SEO Content Sprint</td>
+      <td class="editable" onclick="inlineEdit(event,53,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,53,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,53,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Paulina">P</span> <span style="font-size:12px;color:var(--text-2)">Paulina</span></td>
+      <td class="editable" onclick="openEdit(53)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Feb 1 · Start</span><span class="ms-chip ms-other">Apr 30 · Review</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,53,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(53)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(53)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,2,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,2,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Spring Incentive Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,2,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--teal-light);color:var(--teal-text)">Live</span></td>
+      <td class="editable" onclick="inlineEdit(event,2,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,2,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(2)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Mar 15 · Launch</span><span class="ms-chip ms-other">May 31 · End</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,2,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(2)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(2)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,43,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,43,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">SSV65 &amp; SSV75 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,43,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,43,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,43,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(43)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,43,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Strategy Approved</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(43)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(43)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,3,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,3,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Summer Incentive Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,3,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,3,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,3,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(3)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jun 1 · Launch</span><span class="ms-chip ms-other">Aug 31 · End</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,3,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(3)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(3)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,42,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,42,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">SVL85-3 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,42,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,42,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,42,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(42)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,42,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Feedback needed on features</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(42)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(42)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,47,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,47,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Tracks – Parts Incentive</td>
+      <td class="editable" onclick="inlineEdit(event,47,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--blue-light);color:var(--blue-text)">Planning</span></td>
+      <td class="editable" onclick="inlineEdit(event,47,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,47,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(47)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span style="color:var(--text-3);font-size:11px">—</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,47,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(47)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(47)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,36,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--red-light);color:var(--red-text)">Trade Show</span></td>
+      <td class="editable" onclick="inlineEdit(event,36,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Trade Show: COFS</td>
+      <td class="editable" onclick="inlineEdit(event,36,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,36,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--amber-light);color:var(--amber-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber-text);flex-shrink:0"></span> Medium</span></td>
+      <td class="editable" onclick="inlineEdit(event,36,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(36)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Sep 14 · Set up</span><span class="ms-chip ms-other">Sep 15 · Show open</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,36,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(36)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(36)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,19,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,19,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">VHT-X HD Transmission Video</td>
+      <td class="editable" onclick="inlineEdit(event,19,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--coral-light);color:var(--coral-text)">Shoot</span></td>
+      <td class="editable" onclick="inlineEdit(event,19,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--accent-light);color:var(--accent-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-text);flex-shrink:0"></span> High</span></td>
+      <td class="editable" onclick="inlineEdit(event,19,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(19)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-pre">Apr 14 · Script dev</span><span class="ms-chip ms-pre">Apr 20 · V1 Script</span><span class="ms-chip ms-shoot">May 21 · Shoot</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,19,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">Script in development</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(19)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(19)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,54,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--purple-light);color:var(--purple-text)">Brand</span></td>
+      <td class="editable" onclick="inlineEdit(event,54,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Winter Brand Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,54,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,54,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,54,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(54)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jan 5 · Launch</span><span class="ms-chip ms-other">Feb 28 · Wrap</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,54,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(54)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(54)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,5,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--accent-light);color:var(--accent-text)">Retail</span></td>
+      <td class="editable" onclick="inlineEdit(event,5,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Winter Campaign</td>
+      <td class="editable" onclick="inlineEdit(event,5,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,5,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,5,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Sabrina">S</span> <span style="font-size:12px;color:var(--text-2)">Sabrina</span></td>
+      <td class="editable" onclick="openEdit(5)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Nov 15 · Launch</span><span class="ms-chip ms-other">Dec 31 · End</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,5,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">On Hold - Planning starts XXX Go Live XXX</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(5)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(5)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,62,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,62,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Winter Kickoff Meeting</td>
+      <td class="editable" onclick="inlineEdit(event,62,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,62,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,62,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(62)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jan 13 · Event</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,62,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(62)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(62)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,61,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--amber-light);color:var(--amber-text)">Event</span></td>
+      <td class="editable" onclick="inlineEdit(event,61,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Year-End Dealer Summit</td>
+      <td class="editable" onclick="inlineEdit(event,61,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--gray-light);color:var(--gray-text)">Pending</span></td>
+      <td class="editable" onclick="inlineEdit(event,61,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,61,'owner')" title="Click to edit owner"><span style="color:var(--text-3);font-size:11px">—</span> </td>
+      <td class="editable" onclick="openEdit(61)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Nov 3 · Event</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,61,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status"></td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(61)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(61)">✕</button>
+      </div></td>
+    </tr>
+    <tr>
+      <td class="editable" onclick="inlineEdit(event,41,'cat')" title="Click to edit category"><span class="cat-badge" style="background:var(--teal-light);color:var(--teal-text)">Launch</span></td>
+      <td class="editable" onclick="inlineEdit(event,41,'name')" style="font-weight:500;max-width:200px;min-width:150px" title="Click to edit name">Z900 Launch</td>
+      <td class="editable" onclick="inlineEdit(event,41,'status')" title="Click to edit status"><span class="status-pill" style="background:var(--red-light);color:var(--red-text)">Blocked</span></td>
+      <td class="editable" onclick="inlineEdit(event,41,'priority')" title="Click to edit priority"><span class="priority-badge" style="background:var(--blue-light);color:var(--blue-text)"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue-text);flex-shrink:0"></span> Low</span></td>
+      <td class="editable" onclick="inlineEdit(event,41,'owner')" title="Click to edit owner"><span class="owner-avatar" title="Madison">M</span> <span style="font-size:12px;color:var(--text-2)">Madison</span></td>
+      <td class="editable" onclick="openEdit(41)" title="Click to edit milestones" style="max-width:240px"><div class="ms-list"><span class="ms-chip ms-other">Jul 1 · Strategy</span><span class="ms-chip ms-other">Sep 30 · Launch</span></div></td>
+      <td class="editable" onclick="inlineEdit(event,41,'statusNotes')" style="max-width:160px;color:var(--text-2);font-size:11px" title="Click to edit status">On hold</td>
+      <td><div class="row-actions">
+        <button class="btn-secondary" onclick="openEdit(41)" style="padding:3px 8px;font-size:11px">Edit</button>
+        <button class="btn-danger" onclick="deleteProject(41)">✕</button>
+      </div></td>
+    </tr></tbody>
+  </table></div></div></div>
 
 </div><!-- .app -->
 
@@ -457,19 +1201,19 @@
       </div>
       <div class="form-group">
         <label class="form-label">Category</label>
-        <select class="form-input" id="m-cat"></select>
+        <select class="form-input" id="m-cat"><option value="Retail">Retail</option><option value="Digital">Digital</option><option value="Brand">Brand</option><option value="Trade Show">Trade Show</option><option value="Event">Event</option><option value="Launch">Launch</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Status</label>
-        <select class="form-input" id="m-status"></select>
+        <select class="form-input" id="m-status"><option value="Planning">Planning</option><option value="Shoot">Shoot</option><option value="Live">Live</option><option value="Pending">Pending</option><option value="Blocked">Blocked</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Priority</label>
-        <select class="form-input" id="m-priority"></select>
+        <select class="form-input" id="m-priority"><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
       </div>
       <div class="form-group">
         <label class="form-label">Owner / Assignee</label>
-        <select class="form-input" id="m-owner"></select>
+        <select class="form-input" id="m-owner"><option value="">Unassigned</option><option value="Amanda">Amanda</option><option value="Carlo">Carlo</option><option value="Caryn">Caryn</option><option value="Madison">Madison</option><option value="Paulina">Paulina</option><option value="Sabrina">Sabrina</option></select>
       </div>
       <div class="form-group full">
         <label class="form-label">Status</label>
@@ -521,7 +1265,7 @@
       <div class="cats-col-hdr"><span>Preview</span><span>Name</span><span>Short label</span><span>Color</span><span></span></div>
       <div id="cats-list"></div>
       <button class="btn-secondary" onclick="addCat()" style="margin-top:14px;width:100%">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg> Add category
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg> Add category
       </button>
     </div>
     <!-- Statuses -->
@@ -529,7 +1273,7 @@
       <div class="filter-item-hdr"><span>Preview</span><span>Name</span><span>Color</span><span></span></div>
       <div id="statuses-list"></div>
       <button class="btn-secondary" onclick="addStatus()" style="margin-top:14px;width:100%">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg> Add status
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg> Add status
       </button>
     </div>
     <!-- Priorities -->
@@ -537,7 +1281,7 @@
       <div class="filter-item-hdr"><span>Preview</span><span>Name</span><span>Color</span><span></span></div>
       <div id="priorities-list"></div>
       <button class="btn-secondary" onclick="addPriority()" style="margin-top:14px;width:100%">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg> Add priority
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg> Add priority
       </button>
     </div>
     <!-- Owners -->
@@ -545,7 +1289,7 @@
       <div class="owner-item-hdr"><span></span><span>Name</span><span></span></div>
       <div id="owners-list"></div>
       <button class="btn-secondary" onclick="addOwner()" style="margin-top:14px;width:100%">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg> Add owner
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg> Add owner
       </button>
     </div>
     <!-- Milestone Types -->
@@ -553,7 +1297,7 @@
       <div class="filter-item-hdr"><span>Color</span><span>Name</span><span></span></div>
       <div id="mstypes-list"></div>
       <button class="btn-secondary" onclick="addMsType()" style="margin-top:14px;width:100%">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"/></svg> Add milestone type
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v12M2 8h12"></path></svg> Add milestone type
       </button>
     </div>
   </div>
@@ -567,6 +1311,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ─── EMBEDDED SNAPSHOT (replaced by Download Snapshot) ───────────────────────
+var __DATA_SNAPSHOT__ = {"projects":[{"id":1,"cat":"Retail","name":"Big Orange Event","status":"Live","priority":"High","owner":"Carlo","notes":"Live as of April 1","startDate":"Apr 1","endDate":"Jun 30","milestones":[{"date":"Apr 1","event":"Goes Live"}],"statusNotes":"Live as of April 1"},{"id":2,"cat":"Retail","name":"Spring Incentive Campaign","status":"Live","priority":"High","owner":"Sabrina","notes":"","startDate":"Mar 15","endDate":"May 31","milestones":[{"date":"Mar 15","event":"Launch"},{"date":"May 31","event":"End"}]},{"id":3,"cat":"Retail","name":"Summer Incentive Campaign","status":"Planning","priority":"Medium","owner":"Sabrina","notes":"","startDate":"Jun 1","endDate":"Aug 31","milestones":[{"date":"Jun 1","event":"Launch"},{"date":"Aug 31","event":"End"}]},{"id":4,"cat":"Retail","name":"Fall Incentive Campaign","status":"Pending","priority":"Medium","owner":"Sabrina","notes":"","startDate":"Sep 1","endDate":"Nov 30","milestones":[{"date":"Sep 1","event":"Launch"}],"statusNotes":""},{"id":5,"cat":"Retail","name":"Winter Campaign","status":"Pending","priority":"Low","owner":"Sabrina","notes":"","startDate":"Nov 15","endDate":"Dec 31","milestones":[{"date":"Nov 15","event":"Launch"},{"date":"Dec 31","event":"End"}],"statusNotes":"On Hold - Planning starts XXX Go Live XXX"},{"id":6,"cat":"Retail","name":"R3 – Oli Deneigement (QC)","status":"Shoot","priority":"Low","owner":"","notes":"","startDate":"Apr 13","endDate":"Dec 2","milestones":[{"date":"Apr 13","event":"Editing"},{"date":"Apr 27","event":"Finalize"},{"date":"Dec 2","event":"Release"}]},{"id":7,"cat":"Retail","name":"R3 – Aiden Nicholas Fillator","status":"Shoot","priority":"High","owner":"","notes":"","startDate":"Apr 15","endDate":"Apr 27","milestones":[{"date":"Apr 13","event":"Editing"},{"date":"Apr 27","event":"Finalize"}]},{"id":8,"cat":"Retail","name":"R3 – Antony Legare (QC)","status":"Planning","priority":"High","owner":"","notes":"","startDate":"Apr 13","endDate":"Jun 3","milestones":[{"date":"Apr 13","event":"Pre-production"},{"date":"Apr 20","event":"Shoot"},{"date":"Jun 3","event":"Release"}]},{"id":9,"cat":"Retail","name":"R3 – Josh Sawatsky (BC)","status":"Shoot","priority":"High","owner":"","notes":"","startDate":"Apr 13","endDate":"Jul 8","milestones":[{"date":"Apr 13","event":"Pre-production"},{"date":"Apr 27","event":"Shoot"},{"date":"Jul 8","event":"Release"}]},{"id":10,"cat":"Retail","name":"R3 – Jean Francois Lambert (QC)","status":"Shoot","priority":"Medium","owner":"","notes":"","startDate":"Apr 13","endDate":"May 8","milestones":[{"date":"Apr 13","event":"Pre-production"},{"date":"May 8","event":"Shoot"}]},{"id":11,"cat":"Retail","name":"R3 – Tyler Lee + Joshua Lee (MB)","status":"Planning","priority":"Medium","owner":"","notes":"TBC shoot","startDate":"May 25","endDate":"May 27","milestones":[{"date":"May 26","event":"Shoot"}]},{"id":12,"cat":"Retail","name":"R3 – Mario Jodoin (QC)","status":"Blocked","priority":"Low","owner":"","notes":"Filming Date TBC","startDate":null,"endDate":null,"milestones":[]},{"id":13,"cat":"Retail","name":"R3 – Germain Fournier & Manon Patry","status":"Planning","priority":"Low","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":14,"cat":"Retail","name":"R3 – Trevor Atmer (SK)","status":"Planning","priority":"Low","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":15,"cat":"Retail","name":"R3 – Rick Porter (NS)","status":"Planning","priority":"Low","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":18,"cat":"Retail","name":"Loader + L5070 Studio Shoot","status":"Shoot","priority":"High","owner":"Amanda","notes":"","startDate":"Apr 15","endDate":"May 29","milestones":[{"date":"Apr 15","event":"Shoot"},{"date":"May 29","event":"Retouching"}],"statusNotes":"Filming completed - Retouching in progress"},{"id":19,"cat":"Retail","name":"VHT-X HD Transmission Video","status":"Shoot","priority":"High","owner":"Madison","notes":"","startDate":"Apr 14","endDate":"May 22","milestones":[{"date":"Apr 14","event":"Script dev"},{"date":"Apr 20","event":"V1 Script"},{"date":"May 21","event":"Shoot"}],"statusNotes":"Script in development"},{"id":20,"cat":"Retail","name":"Golf Shoot – RTV / MX","status":"Shoot","priority":"High","owner":"Amanda","notes":"","startDate":"Apr 9","endDate":"May 26","milestones":[{"date":"Apr 9","event":"Site Visit"},{"date":"May 26","event":"Shoot"}],"statusNotes":""},{"id":21,"cat":"Retail","name":"KTC BX90 Shoot","status":"Shoot","priority":"High","owner":"Caryn","notes":"","startDate":"Apr 13","endDate":"Jun 19","milestones":[{"date":"Apr 13","event":"Pre-production"},{"date":"Jun 15","event":"Shoot"},{"date":"Jun 19","event":"Shoot"}],"statusNotes":"Planning starts April 17"},{"id":22,"cat":"Retail","name":"BX90 Studio Shoot","status":"Blocked","priority":"High","owner":"Caryn","notes":"","startDate":"Jul 13","endDate":"Aug 26","milestones":[{"date":"Jul 13","event":"Pre-production"},{"date":"Aug 25","event":"Shoot"}],"statusNotes":"On Hold"},{"id":23,"cat":"Retail","name":"Hay Shoot","status":"Planning","priority":"Medium","owner":"Amanda","notes":"","startDate":"Apr 22","endDate":"Jun 13","milestones":[],"statusNotes":"Filming Date TBC"},{"id":46,"cat":"Retail","name":"Blades – Parts Incentive","status":"Live","priority":"Medium","owner":"Sabrina","notes":"","startDate":"Apr 1","endDate":"Jun 30","milestones":[{"date":"Apr 1","event":"Live"}]},{"id":47,"cat":"Retail","name":"Tracks – Parts Incentive","status":"Planning","priority":"Low","owner":"Sabrina","notes":"Planning underway","startDate":null,"endDate":null,"milestones":[]},{"id":48,"cat":"Retail","name":"AG Parts Campaign","status":"Pending","priority":"Low","owner":"Sabrina","notes":"","startDate":"Sep 1","endDate":"Nov 1","milestones":[]},{"id":24,"cat":"Digital","name":"Nordik – Cold Weather Testing Video","status":"Planning","priority":"Medium","owner":"Amanda","notes":"","startDate":"Apr 1","endDate":"May 11","milestones":[{"date":"May 11","event":"Shoot"}]},{"id":25,"cat":"Digital","name":"RTV-X Lift","status":"Planning","priority":"Medium","owner":"Amanda","notes":"","startDate":null,"endDate":null,"milestones":[],"statusNotes":"Production planning - Confirming dates with talent"},{"id":26,"cat":"Digital","name":"Ag Walkaround","status":"Planning","priority":"Medium","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[],"statusNotes":"Preproduction planning"},{"id":27,"cat":"Digital","name":"BX Summer Contest","status":"Live","priority":"High","owner":"Paulina","notes":"Contest live","startDate":"Jun 1","endDate":"Aug 15","milestones":[{"date":"Jun 1","event":"Launch"},{"date":"Aug 15","event":"Close"}],"statusNotes":"Contest currently live"},{"id":51,"cat":"Digital","name":"Q1 Social Media Push","status":"Complete","priority":"Medium","owner":"Paulina","notes":"","startDate":"Jan 5","endDate":"Mar 31","milestones":[{"date":"Jan 5","event":"Start"},{"date":"Mar 31","event":"Wrap"}]},{"id":52,"cat":"Digital","name":"Paid Search – Spring","status":"Live","priority":"High","owner":"Paulina","notes":"","startDate":"Mar 1","endDate":"May 31","milestones":[{"date":"Mar 1","event":"Launch"}]},{"id":53,"cat":"Digital","name":"SEO Content Sprint","status":"Live","priority":"Medium","owner":"Paulina","notes":"","startDate":"Feb 1","endDate":"Apr 30","milestones":[{"date":"Feb 1","event":"Start"},{"date":"Apr 30","event":"Review"}]},{"id":29,"cat":"Event","name":"Memorial Cup Sponsorship","status":"Planning","priority":"High","owner":"Madison","notes":"","startDate":"","endDate":"","milestones":[{"date":"May 21","endDate":"May 31","event":"Event"}],"statusNotes":""},{"id":30,"cat":"Brand","name":"National Parts Manager Meeting","status":"Planning","priority":"Medium","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":31,"cat":"Brand","name":"Parts Elite Program","status":"Planning","priority":"Medium","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":32,"cat":"Brand","name":"Prospects Challenge","status":"Planning","priority":"Medium","owner":"","notes":"","startDate":null,"endDate":null,"milestones":[]},{"id":33,"cat":"Brand","name":"National Accounts Support","status":"Live","priority":"Medium","owner":"","notes":"Ongoing","startDate":"Jan 1","endDate":"Dec 31","milestones":[]},{"id":40,"cat":"Launch","name":"BX90 Launch","status":"Planning","priority":"Critical","owner":"Madison","notes":"Web features approved","startDate":"May 1","endDate":"Jun 15","milestones":[{"date":"June 15","event":"Shoot"},{"date":"September 28","event":"Release"}],"statusNotes":"Web features approved"},{"id":41,"cat":"Launch","name":"Z900 Launch","status":"Blocked","priority":"Low","owner":"Madison","notes":"Strategy approved","startDate":"Jul 1","endDate":"Sep 30","milestones":[{"date":"Jul 1","event":"Strategy"},{"date":"Sep 30","event":"Launch"}],"statusNotes":"On hold"},{"id":42,"cat":"Launch","name":"SVL85-3 Launch","status":"Planning","priority":"High","owner":"Madison","notes":"","startDate":null,"endDate":null,"milestones":[],"statusNotes":"Feedback needed on features"},{"id":43,"cat":"Launch","name":"SSV65 & SSV75 Launch","status":"Planning","priority":"High","owner":"Madison","notes":"Feedback being revised","startDate":null,"endDate":null,"milestones":[],"statusNotes":"Strategy Approved"},{"id":44,"cat":"Launch","name":"KX018-4 Launch","status":"Planning","priority":"High","owner":"Madison","notes":"","startDate":null,"endDate":null,"milestones":[],"statusNotes":"V2 Strategy in progress"},{"id":54,"cat":"Brand","name":"Winter Brand Campaign","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Jan 5","endDate":"Feb 28","milestones":[{"date":"Jan 5","event":"Launch"},{"date":"Feb 28","event":"Wrap"}]},{"id":34,"cat":"Trade Show","name":"Ag In Motion","status":"Planning","priority":"High","owner":"Madison","notes":"","startDate":"Jul 19","endDate":"Jul 23","milestones":[{"date":"Jul 19","event":"Set up"},{"date":"Jul 21","event":"Show open"}],"statusNotes":"Waiting on Deliverables"},{"id":35,"cat":"Trade Show","name":"Salon de l'agriculture Expo-champs","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Aug 24","endDate":"Aug 28","milestones":[{"date":"Aug 26","event":"Show"}]},{"id":36,"cat":"Trade Show","name":"Trade Show: COFS","status":"Pending","priority":"Medium","owner":"","notes":"","startDate":"Sep 14","endDate":"Sep 17","milestones":[{"date":"Sep 14","event":"Set up"},{"date":"Sep 15","event":"Show open"}]},{"id":37,"cat":"Trade Show","name":"Agri-Trade Red Deer","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Nov 10","endDate":"Nov 13","milestones":[{"date":"Nov 11","event":"Show open"}]},{"id":38,"cat":"Trade Show","name":"Agribition Regina","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Nov 23","endDate":"Nov 28","milestones":[{"date":"Nov 23","event":"Show open"}]},{"id":39,"cat":"Trade Show","name":"Atlantic Farm Mechanization Show","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Nov 19","endDate":"Nov 21","milestones":[{"date":"Nov 19","event":"Show open"}]},{"id":55,"cat":"Trade Show","name":"Canada West Equipment Dealers","status":"Pending","priority":"Medium","owner":"","notes":"","startDate":"Feb 10","endDate":"Feb 13","milestones":[{"date":"Feb 11","event":"Show open"}]},{"id":56,"cat":"Trade Show","name":"Outdoor Farm Show","status":"Pending","priority":"Medium","owner":"","notes":"","startDate":"Sep 8","endDate":"Sep 10","milestones":[{"date":"Sep 8","event":"Show open"}]},{"id":28,"cat":"Event","name":"KNA Connect: Dealer Meeting","status":"Planning","priority":"Critical","owner":"Madison","notes":"","startDate":"Sep 24","endDate":"Sep 30","milestones":[{"date":"Sep 24","event":"Prep"},{"date":"Sep 28","event":"Event start"},{"date":"Sep 30","event":"Event end"}],"statusNotes":"Waiting on Deliverables list"},{"id":59,"cat":"Event","name":"Customer Appreciation Day","status":"Pending","priority":"Medium","owner":"","notes":"","startDate":"Jun 12","endDate":"Jun 12","milestones":[{"date":"Jun 12","event":"Event"}]},{"id":60,"cat":"Event","name":"Harvest Customer Event","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"","endDate":"","milestones":[{"date":"Sep 18","event":"Event"}]},{"id":61,"cat":"Event","name":"Year-End Dealer Summit","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Nov 3","endDate":"Nov 5","milestones":[{"date":"Nov 3","event":"Event"}]},{"id":62,"cat":"Event","name":"Winter Kickoff Meeting","status":"Pending","priority":"Low","owner":"","notes":"","startDate":"Jan 13","endDate":"Jan 14","milestones":[{"date":"Jan 13","event":"Event"}]},{"id":200,"cat":"Launch","name":"BV6000 Launch","status":"Planning","priority":"Medium","owner":"Madison","notes":"","startDate":"april 17","endDate":"april 30","milestones":[{"date":"Strategy Presentation","event":"Feedback"}],"statusNotes":"Strategy in production"}],"categories":[{"name":"Retail","color":"accent","short":""},{"name":"Digital","color":"blue","short":""},{"name":"Brand","color":"purple","short":""},{"name":"Trade Show","color":"red","short":""},{"name":"Event","color":"amber","short":""},{"name":"Launch","color":"teal","short":""}],"statuses":[{"name":"Planning","color":"blue"},{"name":"Shoot","color":"coral"},{"name":"Live","color":"teal"},{"name":"Pending","color":"gray"},{"name":"Blocked","color":"red"}],"priorities":[{"name":"Critical","color":"red"},{"name":"High","color":"accent"},{"name":"Medium","color":"amber"},{"name":"Low","color":"blue"}],"teamMembers":["Carlo","Caryn","Madison","Amanda","Paulina","Sabrina"],"milestoneTypes":[{"name":"Shoot","color":"#E67E22"},{"name":"Travel","color":"#F59E0B"},{"name":"Pre-production","color":"#A855F7"},{"name":"V1 Script Due","color":"#2196F3"},{"name":"Editing","color":"#38BDF8"},{"name":"Feedback","color":"#EC4899"},{"name":"Finalize","color":"#10B981"},{"name":"Retouching","color":"#6366F1"},{"name":"Release","color":"#FF5C1A"},{"name":"Set up","color":"#64748B"},{"name":"Site Visit","color":"#0EA5E9"},{"name":"Event","color":"#8B5CF6"},{"name":"Other","color":"#9A9080"},{"name":"Print Deadline","color":"#f99c06"}],"currentView":"table","nextId":201};
 // ─── DATA ────────────────────────────────────────────────────────────────────
 let statuses=[
   {name:'Planning', color:'blue'},
@@ -2326,21 +3072,39 @@ function buildTodayWidget(now, msList){
       ${msItems}
     </div>`;
 }
+function applyData(d){
+  if(d.projects&&d.projects.length)projects=d.projects;
+  if(d.categories&&d.categories.length)categories=d.categories;
+  if(d.statuses&&d.statuses.length)statuses=d.statuses;
+  if(d.priorities&&d.priorities.length)priorities=d.priorities;
+  if(d.teamMembers)teamMembers=d.teamMembers;
+  if(d.milestoneTypes&&d.milestoneTypes.length)milestoneTypes=d.milestoneTypes;
+  if(d.currentView)currentView=d.currentView;
+  if(d.nextId)nextId=d.nextId;
+}
 function loadPersisted(){
+  // 1. Try localStorage first (local edits take priority)
   try{
     const s=localStorage.getItem(STORAGE_KEY);
-    if(!s)return false;
-    const d=JSON.parse(s);
-    if(d.projects&&d.projects.length)projects=d.projects;
-    if(d.categories&&d.categories.length)categories=d.categories;
-    if(d.statuses&&d.statuses.length)statuses=d.statuses;
-    if(d.priorities&&d.priorities.length)priorities=d.priorities;
-    if(d.teamMembers)teamMembers=d.teamMembers;
-    if(d.milestoneTypes&&d.milestoneTypes.length)milestoneTypes=d.milestoneTypes;
-    if(d.currentView)currentView=d.currentView;
-    if(d.nextId)nextId=d.nextId;
-    return true;
-  }catch(e){return false;}
+    if(s){const d=JSON.parse(s);applyData(d);return true;}
+  }catch(e){}
+  // 2. Fall back to embedded snapshot (baked in via Download Snapshot)
+  try{
+    if(__DATA_SNAPSHOT__){applyData(__DATA_SNAPSHOT__);return true;}
+  }catch(e){}
+  return false;
+}
+function downloadSnapshot(){
+  const snapshot=JSON.stringify({projects,categories,statuses,priorities,teamMembers,milestoneTypes,currentView,nextId});
+  // Use outerHTML — works on file:// and https:// without needing fetch
+  let html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  html=html.replace('var __DATA_SNAPSHOT__ = null;','var __DATA_SNAPSHOT__ = '+snapshot+';');
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='index.html';
+  a.click();
+  showToast('Snapshot downloaded — replace index.html then run deploy.command');
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
@@ -2349,5 +3113,6 @@ if(!loaded)teamMembers=[...new Set(projects.map(p=>p.owner).filter(Boolean))].so
 window.addEventListener('beforeunload',persist);
 render();
 </script>
-</body>
-</html>
+
+
+</body></html>
